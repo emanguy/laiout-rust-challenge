@@ -1,14 +1,12 @@
 mod dto;
 mod rot13;
 
-use chrono::{DateTime, Utc};
+use chrono::Utc;
 use reqwest::Client;
 use serde::de::DeserializeOwned;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use std::fmt::{Display, Formatter};
-use std::io;
 use std::io::Write;
-use std::time::{Instant, SystemTime, UNIX_EPOCH};
 
 #[tokio::main]
 async fn main() {

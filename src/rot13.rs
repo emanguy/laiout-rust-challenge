@@ -20,13 +20,13 @@ where
 }
 
 /// Lower bound of the lowercase alphabet as a u8.
-const LOWER_BEGIN_U8: u8 = 'a' as u8;
+const LOWER_BEGIN_U8: u8 = b'a';
 /// Upper bound of the lowercase alphabet as a u8.
-const LOWER_END_U8: u8 = 'z' as u8;
+const LOWER_END_U8: u8 = b'z';
 /// Lower bound of the uppercase alphabet as a u8.
-const UPPER_BEGIN_U8: u8 = 'A' as u8;
+const UPPER_BEGIN_U8: u8 = b'A';
 /// Upper bound of the uppercase alphabet as a u8.
-const UPPER_END_U8: u8 = 'Z' as u8;
+const UPPER_END_U8: u8 = b'Z';
 
 impl<T> Write for Rot13Writer<T>
 where
@@ -102,10 +102,10 @@ mod tests {
 
         #[test]
         fn returns_original_character_if_outside_range() {
-            let resolved_character_low = rot13_character('A' as u8, LOWER_BEGIN_U8);
-            let resolved_character_high = rot13_character('Z' as u8, LOWER_BEGIN_U8);
-            assert_eq!('A' as u8, resolved_character_low);
-            assert_eq!('Z' as u8, resolved_character_high);
+            let resolved_character_low = rot13_character(b'A', LOWER_BEGIN_U8);
+            let resolved_character_high = rot13_character(b'Z', LOWER_BEGIN_U8);
+            assert_eq!(b'A', resolved_character_low);
+            assert_eq!(b'Z', resolved_character_high);
         }
 
         #[test]
