@@ -1,8 +1,7 @@
-# Instructions
+# Challenge Implementation
 
-1. Try to limit yourself to the dependencies already specified in `Cargo.toml`
-2. Modify `src/main.rs` until you get the `secret`
-3. Enter the secret in your job application form [link](todo)
+Challenge is implemented as requested - will not work until environment variables are filled in
+`config.toml`.
 
-Don't give up, it's probably easier than you think.
+Made sure to add doc comments and tests as well for a more complete solution!
 
