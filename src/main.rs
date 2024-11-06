@@ -19,6 +19,7 @@ async fn main() {
         ),
     };
 
+    // Retrieve instructions
     let instructions: dto::Instructions = post_to_endpoint(
         &client,
         "https://dev.laiout.app/api/applicant/getChallenge",
@@ -26,6 +27,8 @@ async fn main() {
     )
     .await
     .expect("API should be hit successfully");
+    
+    // Convert instructions to plaintext via the rot13 writer
     let mut writer = rot13::Rot13Writer::new(Vec::<u8>::new());
     writer
         .write_all(instructions.instructions.as_bytes())
@@ -33,12 +36,14 @@ async fn main() {
     writer.flush().expect("Should flush to buffer successfully");
     let mut decoded_string = writer.inner;
 
+    // Calculate the nearest 30 second epoch via the current time, append to decrypted string
     let current_time = Utc::now().timestamp();
     let most_recent_30_seconds = current_time - (current_time % 30);
 
     write!(decoded_string, "{}", most_recent_30_seconds)
         .expect("Should append timestamp successfully");
 
+    // Perform hash and send to final challenge endpoint
     let secret = blake3::hash(decoded_string.as_slice());
     let challenge_submission = dto::ChallengeResult {
         applicant_name: app_info.applicant_name,
@@ -46,6 +51,7 @@ async fn main() {
         secret: secret.to_string(),
     };
 
+    // Reveal the final secret
     let deserialized_response: dto::FinalSecret = post_to_endpoint(
         &client,
         "https://dev.laiout.app/api/applicant/checkChallengeSolution",
